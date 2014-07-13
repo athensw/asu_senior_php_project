@@ -41,17 +41,19 @@
 		}	
 		printf("[%d] All Users\n", $i);
 		$input = trim(fgets($handle));
-		$repo_path = "./" . $local_courses[$repo]->id . "-" . $local_courses[$repo]->shortname;
+		$repo_path = str_replace(" ", "", "/tmp/" . $local_courses[$repo]->id . "-" . $local_courses[$repo]->shortname);
+		
+		$current_path = getcwd();
+		chdir($repo_path);
 		//init the repo if we need to
 		if(!file_exists($repo_path)) {
 			printf("Initing repo %s\n", $repo_path);
 			git_repository_init($repo_path);	
+			system("/usr/bin/git add . ");
+			system("/usr/bin/git commit -m \"Iniital commit\"");
 		}
 		
 		$branch = $students[$input]->first_name . $students[$input]->last_name;
-		
-		$current_path = getcwd();
-		system("cd " . $repo_path);
 		system("/usr/bin/git branch " . $branch);
 		system("cd " . $current_path);
 		$input = trim(fgets($handle));
