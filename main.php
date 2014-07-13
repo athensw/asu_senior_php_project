@@ -54,7 +54,7 @@
 		}
 		
 		$branch = $students[$input]->first_name . $students[$input]->last_name;
-		system("/usr/bin/git branch " . $branch);
+		system("cd " . $repo_path . " &&  /usr/bin/git branch " . $branch);
 		system("cd " . $current_path);
 		$input = trim(fgets($handle));
 		
