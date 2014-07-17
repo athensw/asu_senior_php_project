@@ -44,15 +44,16 @@
 		$repo_path = str_replace(" ", "", "/tmp/" . $local_courses[$repo]->id . "-" . $local_courses[$repo]->shortname);
 		
 		$current_path = getcwd();
-		chdir($repo_path);
 		//init the repo if we need to
 		if(!file_exists($repo_path)) {
 			printf("Initing repo %s\n", $repo_path);
 			git_repository_init($repo_path);	
-			system("/usr/bin/git add . ");
+			chdir($repo_path);
+			
+			system("touch blah.txt && /usr/bin/git add . ");
 			system("/usr/bin/git commit -m \"Iniital commit\"");
 		}
-		
+		chdir($repo_path);
 		$branch = $students[$input]->first_name . $students[$input]->last_name;
 		system("cd " . $repo_path . " &&  /usr/bin/git branch " . $branch);
 		system("cd " . $current_path);
